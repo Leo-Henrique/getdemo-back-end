@@ -4,6 +4,10 @@ import { PrismaService } from "./prisma/prisma.service";
 import { PrismaDemoRepository } from "./prisma/repositories/prisma-demo.repository";
 
 export const prismaRepositories = [
+  {
+    provide: DemoRepository,
+    useClass: PrismaDemoRepository,
+  },
 ] satisfies Provider[];
 
 @Module({
