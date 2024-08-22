@@ -1,15 +1,14 @@
 import { createZodDto } from "@anatine/zod-nestjs";
 import { extendApi, generateSchema } from "@anatine/zod-openapi";
 import { UsePipes, applyDecorators } from "@nestjs/common";
+import { ApiBody, ApiParam, ApiQuery, ApiResponse } from "@nestjs/swagger";
+import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import { RequireAtLeastOne } from "type-fest";
 import { ZodType } from "zod";
 import {
   ZodValidationPipe,
   ZodValidationPipeSchemas,
 } from "./zod-validation-pipe";
-
-import { ApiBody, ApiParam, ApiQuery, ApiResponse } from "@nestjs/swagger";
-import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { RequireAtLeastOne } from "type-fest";
 
 export function zodSchemaToSwaggerSchema(schema: ZodType) {
   return generateSchema(schema, false, "3.0") as SchemaObject;
@@ -48,7 +47,7 @@ export function ZodSchemaPipe({
   }
 
   if (body && !isMultipart) {
-    apiDecorators.push(ApiBody({ type: zodSchemaToNestDto(body) }));
+    apiDecorators.push(ApiBody({ schema: zodSchemaToSwaggerSchema(body) }));
   }
 
   if (response) {
