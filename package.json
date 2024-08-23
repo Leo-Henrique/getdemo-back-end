@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky && prisma generate --schema ./src/infra/database/prisma/schema.prisma",
     "start": "node ./dist/infra/server.js",
     "start:dev": "nest start --watch",
     "typecheck": "tsc --noEmit",
@@ -19,8 +19,8 @@
     "services": "docker compose -f src/infra/docker-compose.development.yaml --env-file ./.env",
     "services:up": "pnpm services up -d",
     "services:down": "pnpm services down",
-    "migrate:dev": "pnpm prisma migrate dev --schema ./src/infra/database/prisma/schema.prisma",
-    "migrate:deploy": "pnpm prisma migrate deploy --schema ./src/infra/database/prisma/schema.prisma"
+    "migrate:dev": "prisma migrate dev --schema ./src/infra/database/prisma/schema.prisma",
+    "migrate:deploy": "prisma migrate deploy --schema ./src/infra/database/prisma/schema.prisma"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "2.0.9",
