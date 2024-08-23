@@ -1,3 +1,4 @@
+import { EntityRawData } from "@/core/@types/entity";
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity.id";
 import { OverrideProperties } from "type-fest";
@@ -7,13 +8,17 @@ export type DemoData = {
   id: UniqueEntityId;
   slug: Slug;
   name: string;
+  createdAt: Date;
 };
+
+export type DemoRawData = EntityRawData<DemoData>;
 
 export type DemoDataCreate = OverrideProperties<
   DemoData,
   {
     id?: string;
     slug?: string;
+    createdAt?: Date;
   }
 >;
 
@@ -39,11 +44,20 @@ export class DemoEntity extends Entity<DemoData> {
     this.data.slug = new Slug(name);
   }
 
+  public get createdAt() {
+    return this.data.createdAt;
+  }
+
   static create(input: DemoDataCreate): DemoEntity {
+    const createdAt = new Date();
+
+    createdAt.setMilliseconds(0);
+
     return new DemoEntity({
       ...input,
       id: new UniqueEntityId(input.id),
       slug: new Slug(input.name),
+      createdAt: createdAt,
     });
   }
 }

@@ -1,4 +1,5 @@
 import { ListDemosUseCase } from "@/domain/use-cases/demo/list-demos.use-case";
+import { DemoWithDetailsPresenter } from "@/infra/presenters/demo-with-details.presenter";
 import { DemoPresenter } from "@/infra/presenters/demo.presenter";
 import { Controller, Get, HttpCode } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
@@ -22,7 +23,7 @@ export class ListDemosController {
     const { demos } = await this.listDemosUseCase.handle();
 
     return {
-      demos: demos.map(DemoPresenter.toHttp),
+      demos: demos.map(DemoWithDetailsPresenter.toHttp),
     };
   }
 }

@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { DemoEntity } from "../../entities/demo.entity";
-import { DemoRepository } from "../../repositories/demo.repository";
+import {
+  DemoRepository,
+  DemoWithDetails,
+} from "../../repositories/demo.repository";
 
 type ListDemosUseCaseOutput = {
-  demos: DemoEntity[];
+  demos: DemoWithDetails[];
 };
 
 @Injectable()
@@ -11,7 +13,7 @@ export class ListDemosUseCase {
   public constructor(private readonly demoRepository: DemoRepository) {}
 
   public async handle(): Promise<ListDemosUseCaseOutput> {
-    const demos = await this.demoRepository.findMany();
+    const demos = await this.demoRepository.findManyWithDetails();
 
     return { demos };
   }

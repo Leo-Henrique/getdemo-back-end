@@ -1,5 +1,8 @@
-import { DemoEntity } from "@/domain/entities/demo.entity";
-import { DemoRepository } from "@/domain/repositories/demo.repository";
+import { DemoEntity, DemoRawData } from "@/domain/entities/demo.entity";
+import {
+  DemoRepository,
+  DemoWithDetails,
+} from "@/domain/repositories/demo.repository";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 
@@ -23,9 +26,25 @@ export class PrismaDemoRepository implements DemoRepository {
     return DemoEntity.create(demo);
   }
 
-  public async findMany(): Promise<DemoEntity[]> {
-    const demos = await this.prisma.demo.findMany();
+  public async findManyWithDetails(): Promise<DemoWithDetails[]> {
+    type Row = DemoRawData & { totalFrames: number };
 
-    return demos.map(DemoEntity.create);
+    const demos = await this.prisma.sql<Row>`
+      SELECT
+        demos.*,
+        COUNT(*)::INTEGER AS total_frames
+      FROM
+        demos
+      LEFT JOIN
+        frames ON frames.demo_id = demos.id
+      GROUP BY
+        demos.id
+    `;
+
+    return demos.map(({ totalFrames, ...demo }) => {
+      const domainDemo = DemoEntity.create(demo);
+
+      return Object.assign(domainDemo, { totalFrames });
+    });
   }
 }

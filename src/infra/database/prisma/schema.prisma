@@ -14,9 +14,10 @@ datasource db {
 }
 
 model Demo {
-  id   String @id
-  slug String @unique
-  name String
+  id        String   @id
+  slug      String   @unique
+  name      String
+  createdAt DateTime @map("created_at")
 
   frames Frame[]
 

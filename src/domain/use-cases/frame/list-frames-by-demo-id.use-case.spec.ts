@@ -15,8 +15,8 @@ let frame: ReturnType<typeof makeFrame>;
 
 describe("[Use Case] List frames by demo id", () => {
   beforeEach(async () => {
-    demoRepository = new InMemoryDemoRepository();
     frameRepository = new InMemoryFrameRepository();
+    demoRepository = new InMemoryDemoRepository(frameRepository);
     sut = new ListFramesByDemoIdUseCase(demoRepository, frameRepository);
     demo = makeDemo();
     frame = makeFrame({ demoId: demo.entity.id.value });
