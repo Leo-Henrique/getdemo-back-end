@@ -4,7 +4,7 @@ import { UsePipes, applyDecorators } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiQuery, ApiResponse } from "@nestjs/swagger";
 import { SchemaObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { RequireAtLeastOne } from "type-fest";
-import { ZodType } from "zod";
+import { ZodObject, ZodType } from "zod";
 import {
   ZodValidationPipe,
   ZodValidationPipeSchemas,
@@ -36,10 +36,15 @@ export function ZodSchemaPipe({
 }: RequireAtLeastOne<ZodSchemaPipeParams>) {
   const apiDecorators: NestSwaggerDecorator[] = [];
 
-  if (routeParams) {
-    apiDecorators.push(
-      ApiParam({ type: zodSchemaToNestDto(routeParams), name: "" }),
-    );
+  if (routeParams && routeParams instanceof ZodObject) {
+    for (const paramName in routeParams.shape) {
+      apiDecorators.push(
+        ApiParam({
+          name: paramName,
+          schema: zodSchemaToSwaggerSchema(routeParams.shape[paramName]),
+        }),
+      );
+    }
   }
 
   if (queryParams) {
