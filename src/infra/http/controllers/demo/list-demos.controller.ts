@@ -1,7 +1,7 @@
 import { ListDemosUseCase } from "@/domain/use-cases/demo/list-demos.use-case";
 import { DemoPresenter } from "@/infra/presenters/demo.presenter";
 import { Controller, Get, HttpCode } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
 import { ZodSchemaPipe } from "../../middlewares/zod-schema-pipe";
 
@@ -10,6 +10,7 @@ export class ListDemosController {
   constructor(private readonly listDemosUseCase: ListDemosUseCase) {}
 
   @ApiTags("Demos")
+  @ApiOperation({ summary: "Lista todas as demos existentes." })
   @Get("/demos")
   @HttpCode(200)
   @ZodSchemaPipe({

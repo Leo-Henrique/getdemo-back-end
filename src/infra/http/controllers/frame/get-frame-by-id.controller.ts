@@ -1,7 +1,7 @@
 import { GetFrameByIdUseCase } from "@/domain/use-cases/frame/get-frame-by-id.use-case";
 import { FramePresenter } from "@/infra/presenters/frame.presenter";
 import { Controller, Get, HttpCode, Param } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
 import { ZodSchemaPipe } from "../../middlewares/zod-schema-pipe";
 
@@ -18,6 +18,7 @@ export class GetFrameByIdController {
   constructor(private readonly getFrameByIdUseCase: GetFrameByIdUseCase) {}
 
   @ApiTags("Frames")
+  @ApiOperation({ summary: "Obtém um único frame pelo id." })
   @Get("/frames/:id")
   @HttpCode(200)
   @ZodSchemaPipe({

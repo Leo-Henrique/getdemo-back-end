@@ -1,7 +1,7 @@
 import { ListFramesByDemoIdUseCase } from "@/domain/use-cases/frame/list-frames-by-demo-id.use-case";
 import { FramePresenter } from "@/infra/presenters/frame.presenter";
 import { Controller, Get, HttpCode, Param } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
 import { ZodSchemaPipe } from "../../middlewares/zod-schema-pipe";
 
@@ -20,6 +20,7 @@ export class ListFramesByDemoIdController {
   ) {}
 
   @ApiTags("Frames")
+  @ApiOperation({ summary: "Lista todos os frames de uma demo." })
   @Get("/demos/:demoId/frames")
   @HttpCode(200)
   @ZodSchemaPipe({

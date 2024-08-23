@@ -1,6 +1,6 @@
 import { UpdateFrameHtmlUseCase } from "@/domain/use-cases/frame/update-frame-html.use-case";
 import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
 import { ZodSchemaPipe } from "../../middlewares/zod-schema-pipe";
 
@@ -27,6 +27,7 @@ export class UpdateFrameHtmlController {
   ) {}
 
   @ApiTags("Frames")
+  @ApiOperation({ summary: "Atualiza o HTML de um frame." })
   @Patch("/frames/:id/html")
   @HttpCode(204)
   @ZodSchemaPipe({
