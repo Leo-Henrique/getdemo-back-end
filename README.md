@@ -92,7 +92,7 @@ Certifique-se que o Docker esteja aberto na sua máquina.
 pnpm services:up
 ```
 
-**OBS**: Se você já tem outros containers Docker rodando, talvez seja necessário trocar a porta utilizada pelo Postgres. Basta alterar a variável "**POSTGRES_PORT**" no arquivo **.env** localizado na raiz do projeto.
+**OBS**: Se você já tem outros containers Docker rodando, talvez seja necessário trocar a porta utilizada pelo Postgres. Basta alterar a variável `POSTGRES_PORT` no arquivo `.env` localizado na raiz do projeto.
 
 ### Modelar e alimentar o banco de banco de dados
 
@@ -114,4 +114,4 @@ pnpm seed:dev
 pnpm start:dev
 ```
 
-Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável **API_PORT** no arquivo **.env**. Se você altera-la, também deve apontar para a mesma url no **.env** do [front-end do projeto](https://github.com/Leo-Henrique/get-demo-front-end)).
+Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável `API_PORT` no arquivo **.env**. Se você altera-la, também deve apontar para a mesma url no `.env` do [front-end do projeto](https://github.com/Leo-Henrique/get-demo-front-end)).
