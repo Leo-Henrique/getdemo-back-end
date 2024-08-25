@@ -17,6 +17,7 @@ export class DemoWithDetailsPresenter {
       id: z.string().uuid(),
       slug: z.string(),
       name: z.string(),
+      createdAt: z.date(),
       totalFrames: z.number().int(),
     });
   }

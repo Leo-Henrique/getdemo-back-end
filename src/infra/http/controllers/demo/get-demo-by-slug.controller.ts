@@ -1,5 +1,6 @@
 import { GetDemoBySlugUseCase } from "@/domain/use-cases/demo/get-demo-by-slug.use-case";
-import { DemoPresenter } from "@/infra/presenters/demo.presenter";
+
+import { DemoWithFrameDetailsPresenter } from "@/infra/presenters/demo-with-frame-details.presenter";
 import { Controller, Get, HttpCode, Param } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
@@ -24,14 +25,14 @@ export class GetDemoBySlugController {
   @ZodSchemaPipe({
     routeParams: getDemoBySlugControllerParamsSchema,
     response: {
-      200: DemoPresenter.zodSchema,
+      200: DemoWithFrameDetailsPresenter.zodSchema,
     },
   })
   async handle(@Param() { slug }: GetDemoBySlugControllerParams) {
     const { demo } = await this.getDemoBySlugUseCase.handle({ slug });
 
     return {
-      demo: DemoPresenter.toHttp(demo),
+      demo: DemoWithFrameDetailsPresenter.toHttp(demo),
     };
   }
 }

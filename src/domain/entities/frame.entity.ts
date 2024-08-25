@@ -1,4 +1,4 @@
-import { InferWritableEntityFields } from "@/core/@types/entity";
+import { EntityRawData, InferWritableEntityFields } from "@/core/@types/entity";
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity.id";
 import { OverrideProperties } from "type-fest";
@@ -9,6 +9,8 @@ export type FrameData = {
   html: string;
   order: number;
 };
+
+export type FrameRawData = EntityRawData<FrameData>;
 
 export type FrameDataCreate = OverrideProperties<
   FrameData,
@@ -43,6 +45,13 @@ export class FrameEntity extends Entity<FrameData> {
 
   public set order(order: number) {
     this.data.order = Math.floor(order);
+  }
+
+  public get withoutHtml() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { html, ...frame } = this.data;
+
+    return frame;
   }
 
   public static create(input: FrameDataCreate): FrameEntity {

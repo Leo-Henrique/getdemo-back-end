@@ -46,4 +46,13 @@ export abstract class Entity<Data extends EntityData> {
 
     return serializedData;
   }
+
+  public clone() {
+    const clone = Object.assign(
+      Object.create(Object.getPrototypeOf(this)),
+      this,
+    ) as unknown as this;
+
+    return clone;
+  }
 }

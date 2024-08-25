@@ -34,7 +34,8 @@ describe("[Use Case] List frames by demo id", () => {
 
     const result = await sut.handle({ demoId: demo.entity.id.value });
 
-    expect(result.frames).toEqual([frame.entity]);
+    expect(result.frames[0].id.value).toEqual(frame.entity.id.value);
+    expect(result.frames[0]).not.toHaveProperty("html");
   });
 
   it("should not be able to list frames with non-existent demo", async () => {

@@ -9,7 +9,7 @@ type ListFramesByDemoIdUseCaseInput = {
 };
 
 type ListFramesByDemoIdUseCaseOutput = {
-  frames: FrameEntity[];
+  frames: FrameEntity["withoutHtml"][];
 };
 
 @Injectable()

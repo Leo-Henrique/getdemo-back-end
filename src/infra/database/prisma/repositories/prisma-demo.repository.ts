@@ -1,7 +1,9 @@
 import { DemoEntity, DemoRawData } from "@/domain/entities/demo.entity";
+import { FrameEntity } from "@/domain/entities/frame.entity";
 import {
   DemoRepository,
   DemoWithDetails,
+  DemoWithFrameDetails,
 } from "@/domain/repositories/demo.repository";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
@@ -24,6 +26,50 @@ export class PrismaDemoRepository implements DemoRepository {
     if (!demo) return null;
 
     return DemoEntity.create(demo);
+  }
+
+  public async findUniqueBySlugWithFrameDetails(
+    slug: string,
+  ): Promise<DemoWithFrameDetails | null> {
+    const [demoWithFrames, firstFrame] = await Promise.all([
+      this.prisma.demo.findUnique({
+        where: { slug },
+        include: {
+          frames: {
+            select: {
+              id: true,
+              demoId: true,
+              order: true,
+            },
+            orderBy: {
+              order: "asc",
+            },
+            skip: 1,
+          },
+        },
+      }),
+      this.prisma.frame.findFirst({
+        where: {
+          demo: { slug },
+        },
+        orderBy: { order: "asc" },
+      }),
+    ]);
+
+    if (!demoWithFrames) return null;
+
+    const { frames, ...demo } = demoWithFrames;
+
+    if (!firstFrame)
+      return Object.assign(DemoEntity.create(demo), { frames: [] });
+
+    const framesWithoutHtml = frames.map(frame => {
+      return FrameEntity.create({ ...frame, html: "" }).withoutHtml;
+    });
+
+    return Object.assign(DemoEntity.create(demo), {
+      frames: [FrameEntity.create(firstFrame), ...framesWithoutHtml],
+    });
   }
 
   public async findManyWithDetails(): Promise<DemoWithDetails[]> {

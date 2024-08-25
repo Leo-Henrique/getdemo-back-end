@@ -15,10 +15,24 @@ export class PrismaFrameRepository implements FrameRepository {
     return FrameEntity.create(frame);
   }
 
-  public async findManyByDemoId(demoId: string): Promise<FrameEntity[]> {
-    const frames = await this.prisma.frame.findMany({ where: { demoId } });
+  public async findManyByDemoId(
+    demoId: string,
+  ): Promise<FrameEntity["withoutHtml"][]> {
+    const frames = await this.prisma.frame.findMany({
+      select: {
+        id: true,
+        demoId: true,
+        order: true,
+      },
+      where: { demoId },
+      orderBy: { order: "asc" },
+    });
 
-    return frames.map(FrameEntity.create);
+    return frames.map(frame => {
+      const domainFrame = FrameEntity.create({ ...frame, html: "" });
+
+      return domainFrame.withoutHtml;
+    });
   }
 
   public async updateUnique(

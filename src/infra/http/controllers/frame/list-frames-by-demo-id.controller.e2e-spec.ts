@@ -70,7 +70,6 @@ describe("[Controller] List frames by demo id", () => {
         expect.objectContaining({
           id: expect.any(String),
           demoId: demo.entity.id.value,
-          html: expect.any(String),
           order: expect.any(Number),
         }),
       ]),

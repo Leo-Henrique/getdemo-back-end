@@ -1,5 +1,5 @@
 import { ListFramesByDemoIdUseCase } from "@/domain/use-cases/frame/list-frames-by-demo-id.use-case";
-import { FramePresenter } from "@/infra/presenters/frame.presenter";
+import { FrameWithoutHtmlPresenter } from "@/infra/presenters/frame-without-html.presenter";
 import { Controller, Get, HttpCode, Param } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { z } from "zod";
@@ -26,14 +26,14 @@ export class ListFramesByDemoIdController {
   @ZodSchemaPipe({
     routeParams: listFramesByDemoIdControllerParamsSchema,
     response: {
-      200: z.array(FramePresenter.zodSchema),
+      200: z.array(FrameWithoutHtmlPresenter.zodSchema),
     },
   })
   async handle(@Param() { demoId }: ListFramesByDemoIdControllerParams) {
     const { frames } = await this.listFramesByDemoIdUseCase.handle({ demoId });
 
     return {
-      frames: frames.map(FramePresenter.toHttp),
+      frames: frames.map(FrameWithoutHtmlPresenter.toHttp),
     };
   }
 }

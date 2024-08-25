@@ -45,6 +45,11 @@ describe("[Controller] List demos", () => {
     );
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body.demo).toEqual(demo.entity.getRawData());
+    expect(response.body.demo).toEqual(
+      expect.objectContaining({
+        ...demo.entity.getRawData(),
+        frames: expect.any(Object),
+      }),
+    );
   });
 });

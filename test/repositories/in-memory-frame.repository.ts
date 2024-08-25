@@ -11,8 +11,12 @@ export class InMemoryFrameRepository implements FrameRepository {
     return frame ?? null;
   }
 
-  public async findManyByDemoId(demoId: string): Promise<FrameEntity[]> {
-    const frames = this.items.filter(item => item.demoId.value === demoId);
+  public async findManyByDemoId(
+    demoId: string,
+  ): Promise<FrameEntity["withoutHtml"][]> {
+    const frames = this.items
+      .filter(item => item.demoId.value === demoId)
+      .map(item => item.withoutHtml);
 
     return frames;
   }
