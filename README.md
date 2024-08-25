@@ -37,7 +37,7 @@ pnpm test:e2e:coverage
 pnpm test:unit:coverage
 ```
 
-### Tecnologias
+### Principais tecnologias
 
 Somente os mais modernos e recentes recursos, mas se algum dia precisar mudar, é "facinho" com a Clean Architecture ;)
 
@@ -114,4 +114,4 @@ pnpm seed:dev
 pnpm start:dev
 ```
 
-Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável **API_PORT** no arquivo .env)
+Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável **API_PORT** no arquivo **.env**. Se você altera-la, também deve apontar para a mesma url no **.env** do [front-end do projeto](https://github.com/Leo-Henrique/get-demo-front-end)).
