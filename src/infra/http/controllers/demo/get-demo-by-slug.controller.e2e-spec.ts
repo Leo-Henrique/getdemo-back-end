@@ -48,7 +48,7 @@ describe("[Controller] List demos", () => {
     expect(response.body.demo).toEqual(
       expect.objectContaining({
         ...demo.entity.getRawData(),
-        frames: expect.any(Object),
+        frames: expect.any(Array),
       }),
     );
   });
