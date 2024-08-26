@@ -114,4 +114,4 @@ pnpm seed:dev
 pnpm start:dev
 ```
 
-Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável `API_PORT` no arquivo **.env**. Se você altera-la, também deve apontar para a mesma url no `.env` do [front-end do projeto](https://github.com/Leo-Henrique/get-demo-front-end)).
+Você conseguirá acessar a documentação da API em: [http://localhost:3355/docs](http://localhost:3355/docs) (a porta deve ser a mesma da variável `API_PORT` no arquivo **.env**. Se você altera-la, também deve apontar para a mesma url no `.env` do [front-end do projeto](https://github.com/Leo-Henrique/getdemo-front-end)).
