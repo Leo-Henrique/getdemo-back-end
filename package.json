@@ -22,7 +22,9 @@
     "services:down": "pnpm services down",
     "migrate:dev": "prisma migrate dev --schema ./src/infra/database/prisma/schema.prisma",
     "migrate:deploy": "prisma migrate deploy --schema ./src/infra/database/prisma/schema.prisma",
-    "seed:dev": "nest start --entryFile ./infra/database/prisma/seed/index"
+    "seed:dev": "nest start --entryFile ./infra/database/prisma/seed/index",
+    "seed:deploy": "node ./dist/infra/database/prisma/seed/index.js",
+    "postinstall": "pnpm migrate:deploy && pnpm seed:deploy"
   },
   "dependencies": {
     "@anatine/zod-nestjs": "2.0.9",

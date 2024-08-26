@@ -4,6 +4,11 @@ import { PrismaClient } from "@prisma/client";
 
 export async function createChatgptDemo(prisma: PrismaClient) {
   const demo = DemoEntity.create({ name: "ChatGPT" });
+  const demoOnDatabase = await prisma.demo.findUnique({
+    where: { slug: demo.slug.value },
+  });
+
+  if (demoOnDatabase) return;
 
   await prisma.demo.create({ data: demo.getRawData() });
 
